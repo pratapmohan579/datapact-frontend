@@ -152,3 +152,5 @@ The platform's control plane (UI + API) and the foundational execution pipeline 
 - **AI Auto-Remediation**: Agents that don't just report failures, but suggest or execute SQL to fix data pipelines automatically.
 - **GitHub PR Integration**: Blocking code merges if they violate downstream data contracts.
 - **Dynamic Lineage Graphs**: Fully interactive DAG visualizations for asset dependencies.
+#   D a t a h o u s e  
+ 
