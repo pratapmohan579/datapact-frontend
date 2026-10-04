@@ -15,24 +15,22 @@ interface Edge {
   type: string;
 }
 
-export default function KnowledgeGraphPage() {
-  const [nodes, setNodes] = useState<Node[]>([]);
-  const [edges, setEdges] = useState<Edge[]>([]);
+const INITIAL_NODES: Node[] = [
+  { id: "user:1", label: "Data Engineer", type: "USER" },
+  { id: "table:sales", label: "fct_sales", type: "TABLE" },
+  { id: "contract:12", label: "Sales Contract", type: "CONTRACT" },
+  { id: "kpi:revenue", label: "Net Revenue", type: "KPI" }
+];
 
-  useEffect(() => {
-    // Fetch from backend in a real app, mock for now
-    setNodes([
-      { id: "user:1", label: "Data Engineer", type: "USER" },
-      { id: "table:sales", label: "fct_sales", type: "TABLE" },
-      { id: "contract:12", label: "Sales Contract", type: "CONTRACT" },
-      { id: "kpi:revenue", label: "Net Revenue", type: "KPI" }
-    ]);
-    setEdges([
-      { source: "user:1", target: "contract:12", type: "OWNS" },
-      { source: "contract:12", target: "table:sales", type: "GOVERNS" },
-      { source: "table:sales", target: "kpi:revenue", type: "FEEDS" }
-    ]);
-  }, []);
+const INITIAL_EDGES: Edge[] = [
+  { source: "user:1", target: "contract:12", type: "OWNS" },
+  { source: "contract:12", target: "table:sales", type: "GOVERNS" },
+  { source: "table:sales", target: "kpi:revenue", type: "FEEDS" }
+];
+
+export default function KnowledgeGraphPage() {
+  const [nodes] = useState<Node[]>(INITIAL_NODES);
+  const [edges] = useState<Edge[]>(INITIAL_EDGES);
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-6">

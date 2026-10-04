@@ -29,9 +29,9 @@ export default function ProfilePage() {
         <div className="w-full md:w-1/3 space-y-6">
           <div className="glass-card p-6 border-border flex flex-col items-center text-center">
             <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-3xl font-bold text-white shadow-xl mb-4 border-4 border-background">
-              KA
+              MP
             </div>
-            <h2 className="text-xl font-bold text-foreground">Kazi Alam</h2>
+            <h2 className="text-xl font-bold text-foreground">Mohan Pratap</h2>
             <p className="text-sm text-muted-foreground mb-4">admin@datapact.io</p>
             
             <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1 bg-green-500/10 text-green-500 rounded-full border border-green-500/20 mb-6">

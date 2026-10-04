@@ -9,29 +9,28 @@ export default function GeneralSettingsPage() {
   const [user, setUser] = useState<{ email: string; is_active: boolean } | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        // Fallback for demo
-        return;
-      }
-      const res = await fetch("http://localhost:8000/api/v1/auth/me", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchProfile();
+    let isMounted = true;
+    const token = localStorage.getItem("token");
+    if (!token) {
+      queueMicrotask(() => {
+        if (isMounted) setLoading(false);
+      });
+      return;
+    }
+    fetch("http://localhost:8000/api/v1/auth/me", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (isMounted && data) setUser(data);
+      })
+      .catch(console.error)
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => { isMounted = false; };
   }, []);
 
   const handleLogout = () => {

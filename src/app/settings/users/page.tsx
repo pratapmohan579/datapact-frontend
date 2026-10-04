@@ -18,7 +18,7 @@ interface UserData {
 }
 
 const initialUsers: UserData[] = [
-  { id: 'usr-001', name: 'Kazi Alam', email: 'admin@datapact.io', role: 'Workspace Admin', status: 'Active', lastActive: 'Current Session', mfaEnabled: true, workspace: 'DataPact Enterprise', permissions: 124 },
+  { id: 'usr-001', name: 'Mohan Pratap', email: 'admin@datapact.io', role: 'Workspace Admin', status: 'Active', lastActive: 'Current Session', mfaEnabled: true, workspace: 'DataPact Enterprise', permissions: 124 },
   { id: 'usr-002', name: 'Alice Cooper', email: 'alice@datapact.com', role: 'Data Engineer', status: 'Active', lastActive: '2 mins ago', mfaEnabled: true, workspace: 'DataPact Enterprise', permissions: 82 },
   { id: 'usr-003', name: 'Bob Smith', email: 'bob@datapact.com', role: 'Data Scientist', status: 'Active', lastActive: '1 hr ago', mfaEnabled: false, workspace: 'DataPact Enterprise', permissions: 45 },
   { id: 'usr-004', name: 'Charlie Davis', email: 'charlie@datapact.com', role: 'Viewer', status: 'Inactive', lastActive: '2 days ago', mfaEnabled: true, workspace: 'DataPact Enterprise', permissions: 12 },

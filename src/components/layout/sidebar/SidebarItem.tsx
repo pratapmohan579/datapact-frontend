@@ -21,6 +21,7 @@ export function SidebarItem({ name, href, icon: Icon, badge }: SidebarItemProps)
   const { isCollapsed } = useSidebarStore();
   const [isOpen, setIsOpen] = useState(false);
   const isActive = pathname === href || pathname.startsWith(`${href}/`);
+  const isHome = name === 'Home';
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -37,19 +38,23 @@ export function SidebarItem({ name, href, icon: Icon, badge }: SidebarItemProps)
     <div className="relative">
       <Link
         href={href}
-        ref={refs.setReference as any}
+        ref={(node) => { refs.setReference(node); }}
         {...getReferenceProps()}
         className={cn(
           "relative flex items-center gap-3 rounded-lg outline-none transition-colors",
           isCollapsed ? "justify-center h-10 w-10 mx-auto" : "px-3 py-2 w-full",
-          isActive ? "text-foreground" : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+          isActive 
+            ? "text-white font-extrabold" 
+            : isHome 
+              ? "text-blue-300 hover:bg-zinc-850 hover:text-blue-200" 
+              : "text-zinc-200 hover:bg-zinc-850 hover:text-white"
         )}
       >
         {isActive && (
           <motion.div
             layoutId="active-nav-indicator"
             className={cn(
-              "absolute bg-gradient-to-r from-blue-600/20 to-purple-600/10 border-l-2 border-blue-600 rounded-lg",
+              "absolute bg-gradient-to-r from-blue-500/25 to-indigo-500/15 border-l-2 border-blue-400 rounded-lg shadow-[0_0_12px_rgba(59,130,246,0.2)]",
               isCollapsed ? "inset-0 border-l-[3px]" : "inset-0"
             )}
             initial={{ opacity: 0 }}
@@ -59,7 +64,14 @@ export function SidebarItem({ name, href, icon: Icon, badge }: SidebarItemProps)
         )}
 
         <div className="relative z-10 flex items-center justify-center">
-          <Icon className={cn("w-5 h-5", isActive ? "text-blue-500" : "")} />
+          <Icon className={cn(
+            "w-5 h-5 transition-colors", 
+            isActive 
+              ? "text-blue-400 drop-shadow-[0_0_8px_rgba(96,165,250,0.6)]" 
+              : isHome 
+                ? "text-blue-400 drop-shadow-[0_0_6px_rgba(96,165,250,0.4)]" 
+                : "text-zinc-300 group-hover:text-zinc-100"
+          )} />
           {isCollapsed && badge && badge > 0 && (
             <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-blue-500 rounded-full border-2 border-card" />
           )}
@@ -67,7 +79,14 @@ export function SidebarItem({ name, href, icon: Icon, badge }: SidebarItemProps)
 
         {!isCollapsed && (
           <>
-            <span className="relative z-10 text-sm font-medium flex-1 truncate">{name}</span>
+            <span className={cn(
+              "relative z-10 text-sm font-semibold flex-1 truncate", 
+              isActive 
+                ? "text-white font-bold" 
+                : isHome 
+                  ? "text-blue-300 font-bold" 
+                  : "text-zinc-200"
+            )}>{name}</span>
             {badge !== undefined && badge > 0 && (
               <span className="relative z-10 text-[10px] font-bold bg-blue-500 text-white px-1.5 py-0.5 rounded-full">
                 {badge > 99 ? '99+' : badge}
@@ -80,7 +99,7 @@ export function SidebarItem({ name, href, icon: Icon, badge }: SidebarItemProps)
       <AnimatePresence>
         {isCollapsed && isOpen && (
           <div
-            ref={refs.setFloating}
+            ref={(node) => { refs.setFloating(node); }}
             style={floatingStyles}
             {...getFloatingProps()}
             className="z-50"

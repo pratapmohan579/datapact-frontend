@@ -24,7 +24,7 @@ export function UserMenu() {
   return (
     <div className="relative">
       <button
-        ref={refs.setReference}
+        ref={(node) => { refs.setReference(node); }}
         {...getReferenceProps()}
         className={cn(
           "w-full flex items-center justify-between p-2 rounded-xl transition-all duration-200 hover:bg-muted/50 border border-transparent hover:border-border cursor-pointer group",
@@ -37,7 +37,7 @@ export function UserMenu() {
           </div>
           {!isCollapsed && (
             <div className="flex flex-col items-start truncate">
-              <span className="text-sm font-semibold text-foreground truncate">Kazi Alam</span>
+              <span className="text-sm font-semibold text-foreground truncate">Mohan Pratap</span>
               <span className="text-xs text-muted-foreground truncate">Admin</span>
             </div>
           )}
@@ -49,14 +49,14 @@ export function UserMenu() {
 
       {isOpen && (
         <div
-          ref={refs.setFloating}
+          ref={(node) => { refs.setFloating(node); }}
           style={floatingStyles}
           {...getFloatingProps()}
           className="z-50 w-64 bg-card border border-border rounded-xl shadow-xl py-2 outline-none flex flex-col gap-1"
         >
           <div className="px-3 py-2">
-            <p className="text-sm font-medium text-foreground">Kazi Alam</p>
-            <p className="text-xs text-muted-foreground">kazi@datapact.dev</p>
+            <p className="text-sm font-medium text-foreground">Mohan Pratap</p>
+            <p className="text-xs text-muted-foreground">mohan@datapact.dev</p>
           </div>
           <div className="h-px bg-border my-1"></div>
           

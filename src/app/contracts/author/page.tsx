@@ -28,12 +28,6 @@ export default function ContractAuthoringPage() {
   const [isDeploying, setIsDeploying] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
 
-  // Keyboard Shortcuts
-  useHotkeys('ctrl+s, cmd+s', (e) => {
-    e.preventDefault();
-    handleSaveDraft();
-  }, { enableOnFormTags: true });
-
   const handleSaveDraft = () => {
     if (!isYamlValid) {
       toast.error('Cannot save draft: YAML syntax is invalid');
@@ -42,6 +36,12 @@ export default function ContractAuthoringPage() {
     markSaved();
     toast.success('Draft saved and version created');
   };
+
+  // Keyboard Shortcuts
+  useHotkeys('ctrl+s, cmd+s', (e) => {
+    e.preventDefault();
+    handleSaveDraft();
+  }, { enableOnFormTags: true });
 
   const handleStatusChange = (newStatus: ContractStatus) => {
     setContract(prev => ({ ...prev, status: newStatus }));

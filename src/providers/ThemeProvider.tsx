@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useWorkspacePreferences, useUpdateWorkspacePreferences, WorkspacePreference } from "@/api/workspace/workspace";
+import { useWorkspacePreferences, useUpdateWorkspacePreferences } from "@/api/workspace/workspace";
 
 type Theme = "midnight-pro" | "dark" | "light";
 
@@ -13,22 +13,28 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [themeState, setThemeState] = useState<Theme>("light"); // Default
-  const { data: preferences, isLoading } = useWorkspacePreferences();
+  const [themeState, setThemeState] = useState<Theme>("light");
+  const { data: preferences } = useWorkspacePreferences();
   const updatePref = useUpdateWorkspacePreferences();
 
   useEffect(() => {
+    let activeTheme: Theme | null = null;
+
     if (preferences?.theme && ["midnight-pro", "dark", "light", "system"].includes(preferences.theme)) {
-      const activeTheme = preferences.theme === "system" ? "light" : preferences.theme as Theme;
-      setThemeState(activeTheme);
-      document.documentElement.setAttribute("data-theme", activeTheme);
+      activeTheme = preferences.theme === "system" ? "light" : (preferences.theme as Theme);
     } else {
-      // Fallback to local storage if API fails or during load
       const savedTheme = localStorage.getItem("datapact-theme") as Theme;
       if (savedTheme && ["midnight-pro", "dark", "light"].includes(savedTheme)) {
-        setThemeState(savedTheme);
-        document.documentElement.setAttribute("data-theme", savedTheme);
+        activeTheme = savedTheme;
       }
+    }
+
+    if (activeTheme) {
+      document.documentElement.setAttribute("data-theme", activeTheme);
+      const targetTheme = activeTheme;
+      requestAnimationFrame(() => {
+        setThemeState((prev) => (prev !== targetTheme ? targetTheme : prev));
+      });
     }
   }, [preferences?.theme]);
 

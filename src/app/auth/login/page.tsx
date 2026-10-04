@@ -140,7 +140,7 @@ export default function LoginPage() {
         
         {!isMfaRequired && (
           <p className="text-center text-sm text-muted-foreground mt-6">
-            Don't have an account? <Link href="/auth/signup" className="text-purple-500 hover:text-purple-400 font-medium">Sign up</Link>
+            Don&apos;t have an account? <Link href="/auth/signup" className="text-purple-500 hover:text-purple-400 font-medium">Sign up</Link>
           </p>
         )}
       </div>

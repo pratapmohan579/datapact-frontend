@@ -28,7 +28,7 @@ function SearchResultsContent() {
   return (
     <div className="space-y-6 p-8">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Search Results for "{q}"</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Search Results for &quot;{q}&quot;</h1>
         <p className="text-muted-foreground mt-2">Found matching assets, contracts, teams, runbooks, and DAGs.</p>
       </div>
 

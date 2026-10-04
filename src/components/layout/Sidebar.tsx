@@ -10,16 +10,13 @@ import { StatusCard } from './sidebar/StatusCard';
 import { UserMenu } from './sidebar/UserMenu';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+
+const emptySubscribe = () => () => {};
 
 export default function Sidebar() {
   const { isCollapsed, toggleCollapse } = useSidebarStore();
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Prevent hydration mismatch
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   if (!isMounted) {
     return (
@@ -41,8 +38,7 @@ export default function Sidebar() {
         mass: 0.8
       }}
       className={cn(
-        "h-screen bg-[#0F111A] border-r border-border shrink-0 flex flex-col z-40 relative hidden md:flex",
-        // Using a very dark, premium bg like Linear or Cursor
+        "h-screen bg-black border-r border-zinc-900 shrink-0 flex flex-col z-40 relative hidden md:flex",
       )}
     >
       {/* Top Header / Logo */}
@@ -52,7 +48,7 @@ export default function Sidebar() {
       )}>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-            <DataPactLogo className="w-8 h-8" />
+            <DataPactLogo variant="white" className="w-8 h-8 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
           </div>
           {!isCollapsed && (
             <motion.span 
@@ -106,7 +102,7 @@ export default function Sidebar() {
       </button>
 
       {/* Bottom Footer */}
-      <div className="flex flex-col p-2 gap-2 mt-auto border-t border-border/50 bg-[#0F111A]">
+      <div className="flex flex-col p-2 gap-2 mt-auto border-t border-zinc-900 bg-black">
         <StatusCard />
         <UserMenu />
       </div>

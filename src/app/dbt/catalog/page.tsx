@@ -50,7 +50,7 @@ export default function DbtCatalog() {
           <div className="p-8 text-center text-muted-foreground">Scanning dbt metadata...</div>
         ) : assets.length === 0 ? (
           <div className="p-8 text-center text-muted-foreground">
-            No assets found. Go back and click "Sync Mock dbt Project".
+            No assets found. Go back and click &quot;Sync Mock dbt Project&quot;.
           </div>
         ) : (
           <table className="w-full text-left border-collapse">

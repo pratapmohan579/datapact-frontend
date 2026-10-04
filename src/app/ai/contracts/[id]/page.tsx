@@ -70,7 +70,8 @@ metrics:
 `
 };
 
-export default function ContractGenerationWizard({ params }: { params: { id: string } }) {
+export default function ContractGenerationWizard({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const [activeVariant, setActiveVariant] = useState<'balanced'|'strict'|'relaxed'>('balanced');
   const [yamlContent, setYamlContent] = useState(variants.balanced);
   const [activeStep, setActiveStep] = useState(3);

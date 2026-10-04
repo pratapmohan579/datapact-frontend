@@ -61,7 +61,7 @@ apiClient.interceptors.response.use(
           originalRequest.headers['Authorization'] = `Bearer ${res.data.access_token}`;
           return apiClient(originalRequest);
         }
-      } catch (refreshError) {
+      } catch {
         // Refresh failed (e.g., cookie expired or revoked), logout user
         localStorage.removeItem('access_token');
         if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useAIStudioStore } from "@/store/ai-studio-store";
 import AssetBrowser from "@/components/ai-studio/AssetBrowser";
 import AssetOverview from "@/components/ai-studio/AssetOverview";
@@ -10,13 +10,11 @@ import ExplainabilityDrawer from "@/components/ai-studio/ExplainabilityDrawer";
 import AICopilotDrawer from "@/components/ai-studio/AICopilotDrawer";
 import { Loader2, Sparkles } from "lucide-react";
 
+const emptySubscribe = () => () => {};
+
 export default function AIContractStudioPage() {
   const { selectedAssetId, activeDrawer, isAssetBrowserOpen, setActiveDrawer } = useAIStudioStore();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   if (!isMounted) return <div className="h-full flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-ai" /></div>;
 

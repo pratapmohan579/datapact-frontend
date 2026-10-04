@@ -26,7 +26,7 @@ export function WorkspaceSwitcher() {
   return (
     <div className="relative">
       <button
-        ref={refs.setReference}
+        ref={(node) => { refs.setReference(node); }}
         {...getReferenceProps()}
         className={cn(
           "w-full flex items-center justify-between p-2 rounded-xl transition-all duration-200 hover:bg-muted/50 border border-transparent hover:border-border cursor-pointer group",
@@ -53,7 +53,7 @@ export function WorkspaceSwitcher() {
 
       {isOpen && (
         <div
-          ref={refs.setFloating}
+          ref={(node) => { refs.setFloating(node); }}
           style={floatingStyles}
           {...getFloatingProps()}
           className="z-50 w-64 bg-card border border-border rounded-xl shadow-xl p-2 outline-none flex flex-col gap-1"

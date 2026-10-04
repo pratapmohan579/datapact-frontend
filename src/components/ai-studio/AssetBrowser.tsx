@@ -15,7 +15,7 @@ export default function AssetBrowser() {
   useEffect(() => {
     async function fetchTree() {
       try {
-        const data = await api.get('/ai/contracts/assets');
+        const data = await api.get<any>('/ai/contracts/assets');
         if (data.tree) {
           setTree(data.tree);
           // Auto-expand first node

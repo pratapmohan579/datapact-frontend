@@ -1,6 +1,7 @@
 'use client';
 
 import { useSidebarStore } from '@/store/SidebarStore';
+import { cn } from '@/lib/utils';
 
 interface SidebarGroupProps {
   name: string;
@@ -9,11 +10,15 @@ interface SidebarGroupProps {
 
 export function SidebarGroup({ name, children }: SidebarGroupProps) {
   const { isCollapsed } = useSidebarStore();
+  const isOverview = name === 'Overview';
 
   return (
     <div className="flex flex-col mb-6">
       {!isCollapsed && (
-        <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+        <h3 className={cn(
+          "px-3 text-xs font-bold uppercase tracking-wider mb-2",
+          isOverview ? "text-blue-400 drop-shadow-[0_0_8px_rgba(96,165,250,0.4)]" : "text-muted-foreground"
+        )}>
           {name}
         </h3>
       )}

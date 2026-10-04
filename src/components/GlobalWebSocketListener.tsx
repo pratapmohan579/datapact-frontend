@@ -19,21 +19,22 @@ export function GlobalWebSocketListener() {
 
   useEffect(() => {
     if (!lastMessage) return;
+    const msg = lastMessage as any;
 
     // Handle generic system events
-    switch (lastMessage.type) {
+    switch (msg.type) {
       case 'validation.completed':
-        toast.success(`Validation finished for contract ${lastMessage.payload?.contract_id}`);
+        toast.success(`Validation finished for contract ${msg.payload?.contract_id}`);
         // Invalidate contracts/dashboard queries
         queryClient.invalidateQueries({ queryKey: ['contracts'] });
         queryClient.invalidateQueries({ queryKey: ['dashboard'] });
         break;
       case 'incident.created':
-        toast.error(`New Incident: ${lastMessage.payload?.title}`);
+        toast.error(`New Incident: ${msg.payload?.title}`);
         queryClient.invalidateQueries({ queryKey: ['incidents'] });
         break;
       case 'worker.online':
-        toast.info(`Worker ${lastMessage.payload?.worker_id} came online`);
+        toast.info(`Worker ${msg.payload?.worker_id} came online`);
         queryClient.invalidateQueries({ queryKey: ['workers'] });
         break;
       default:

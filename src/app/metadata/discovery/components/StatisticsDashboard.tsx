@@ -20,7 +20,7 @@ const COLORS = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b'];
 
 export function StatisticsDashboard() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 gap-6">
       {/* Assets by Source */}
       <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
         <h3 className="font-bold mb-4">Assets by Source</h3>

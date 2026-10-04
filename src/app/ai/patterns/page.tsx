@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { Tree } from "react-arborist";
 import { 
@@ -57,15 +57,16 @@ function TreeIcon({ type, isOpen }: { type: string, isOpen: boolean }) {
 // Custom CSS Grid Calendar Heatmap
 function CalendarHeatmap() {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  // Mock 4 weeks of data
-  const grid = Array.from({ length: 28 }).map((_, i) => {
-    const isWeekend = i % 7 === 0 || i % 7 === 6;
-    const isFriday = i % 7 === 5;
-    let intensity = Math.random() * 0.3; // base noise
-    if (isWeekend) intensity += 0.5; // weekend spike
-    if (isFriday) intensity += 0.8; // Friday spike
-    return Math.min(intensity, 1);
-  });
+  const grid = useMemo(() => {
+    return Array.from({ length: 28 }).map((_, i) => {
+      const isWeekend = i % 7 === 0 || i % 7 === 6;
+      const isFriday = i % 7 === 5;
+      let intensity = ((i * 13) % 30) / 100;
+      if (isWeekend) intensity += 0.5;
+      if (isFriday) intensity += 0.8;
+      return Math.min(intensity, 1);
+    });
+  }, []);
 
   return (
     <div className="flex flex-col gap-2">
@@ -73,7 +74,7 @@ function CalendarHeatmap() {
         {days.map(d => <div key={d} className="flex-1 text-center">{d}</div>)}
       </div>
       <div className="grid grid-cols-7 gap-2">
-        {grid.map((val, i) => (
+        {grid.map((val: number, i: number) => (
           <div 
             key={i} 
             className="aspect-square rounded-md border border-border/50"
@@ -374,7 +375,7 @@ export default function PatternDetectionStudio() {
                   {activeTab === 'forecast' && (
                     <div className="grid grid-cols-3 gap-6">
                       <div className="col-span-3">
-                        <h3 className="text-lg font-semibold mb-2">Tomorrow's Forecast</h3>
+                        <h3 className="text-lg font-semibold mb-2">Tomorrow&apos;s Forecast</h3>
                         <p className="text-sm text-muted-foreground mb-4">Predictions generated based on 90-day rolling window.</p>
                       </div>
                       

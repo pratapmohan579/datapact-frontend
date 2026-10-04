@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { PlayCircle, Check, X, TrendingUp, AlertTriangle } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
@@ -14,12 +14,7 @@ export default function ContractLearningPage() {
   const [loading, setLoading] = useState(true);
   const [triggering, setTriggering] = useState(false);
 
-  useEffect(() => {
-    fetchData();
-  }, [contractId]);
-
-  const fetchData = async () => {
-    setLoading(true);
+  const fetchData = useCallback(async () => {
     try {
       const [recsRes, statsRes] = await Promise.all([
         fetch(`http://localhost:8000/api/v1/learning/contracts/${contractId}/recommendations`),
@@ -34,7 +29,11 @@ export default function ContractLearningPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [contractId]);
+
+  useEffect(() => {
+    Promise.resolve().then(fetchData);
+  }, [fetchData]);
 
   const triggerLearning = async () => {
     setTriggering(true);

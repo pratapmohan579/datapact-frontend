@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -12,25 +12,22 @@ export default function ContractSuggester() {
   const [deploying, setDeploying] = useState(false);
 
   useEffect(() => {
-    fetchSuggestions();
-  }, [params.id]);
-
-  const fetchSuggestions = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`/api/v1/dbt/suggestions/${params.id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+    let isMounted = true;
+    const token = localStorage.getItem("token");
+    fetch(`/api/v1/dbt/suggestions/${params?.id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.ok ? res.json() : null)
+      .then(json => {
+        if (isMounted && json) setData(json);
+      })
+      .catch(console.error)
+      .finally(() => {
+        if (isMounted) setLoading(false);
       });
-      if (res.ok) {
-        const json = await res.json();
-        setData(json);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+
+    return () => { isMounted = false; };
+  }, [params?.id]);
 
   const handleDeploy = async () => {
     setDeploying(true);

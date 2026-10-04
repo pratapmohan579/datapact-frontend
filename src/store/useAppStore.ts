@@ -7,6 +7,7 @@ export interface User {
   full_name?: string;
   is_active: boolean;
   mfa_enabled?: boolean;
+  roles?: string[];
 }
 
 export interface Workspace {
@@ -42,9 +43,18 @@ export const useAppStore = create<AppState>((set, get) => ({
   isCommandCenterOpen: false,
   workspaceHealth: 97, // Mock starting health
   activeJobs: 3,
-  currentUser: null,
-  workspaces: [],
-  activeWorkspaceId: null,
+  currentUser: {
+    id: 1,
+    email: "mohan.pratap@datapact.ai",
+    full_name: "Mohan Pratap",
+    is_active: true,
+    mfa_enabled: false,
+    roles: ["admin"]
+  },
+  workspaces: [
+    { id: 1, name: "Mohan's Workspace", organization_id: 1 }
+  ],
+  activeWorkspaceId: 1,
 
   toggleRightSidebar: () => set((state) => ({ isRightSidebarOpen: !state.isRightSidebarOpen })),
   setRightSidebarTab: (tab) => set({ rightSidebarTab: tab, isRightSidebarOpen: true }),
@@ -59,7 +69,21 @@ export const useAppStore = create<AppState>((set, get) => ({
       await get().fetchWorkspaces();
     } catch (error) {
       console.error("Failed to fetch user", error);
-      set({ currentUser: null, workspaces: [], activeWorkspaceId: null });
+      // Fallback mock user: Mohan Pratap
+      set({ 
+        currentUser: {
+          id: 1,
+          email: "mohan.pratap@datapact.ai",
+          full_name: "Mohan Pratap",
+          is_active: true,
+          mfa_enabled: false,
+          roles: ["admin"]
+        },
+        workspaces: [
+          { id: 1, name: "Mohan's Workspace", organization_id: 1 }
+        ],
+        activeWorkspaceId: 1
+      });
     }
   },
   

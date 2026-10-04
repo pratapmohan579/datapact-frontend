@@ -39,15 +39,15 @@ export default function MetadataDiscoveryStudioPage() {
             {/* Section 6 & 7 & 8: Explorer, Details, AI Classification */}
             <AssetExplorerSplitView />
             
-            {/* Section 10: Statistics */}
-            <StatisticsDashboard />
-            
             {/* Section 14: AI Report */}
             <AiScanReport />
           </div>
           
           {/* Right Column (Sidebar) */}
           <div className="space-y-8">
+            {/* Section 10: Statistics */}
+            <StatisticsDashboard />
+
             {/* Section 15: Health Score */}
             <HealthScore />
             

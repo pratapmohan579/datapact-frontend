@@ -11,7 +11,7 @@ export const useDashboardMetrics = () => {
       try {
         const { data } = await apiClient.get('/dashboard/metrics');
         return data;
-      } catch (error) {
+      } catch {
         return {
           total_contracts: 0,
           active_incidents: 0,

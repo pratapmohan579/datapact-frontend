@@ -16,24 +16,20 @@ export default function DbtExecutiveDashboard() {
   const [stats, setStats] = useState<CoverageStats | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
   const fetchStats = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("/api/v1/dbt/coverage", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setStats(data);
-      }
-    } catch (err) {
-      console.error(err);
+    const token = localStorage.getItem("token");
+    const res = await fetch("/api/v1/dbt/coverage", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setStats(data);
     }
   };
+
+  useEffect(() => {
+    fetchStats().catch(console.error);
+  }, []);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;

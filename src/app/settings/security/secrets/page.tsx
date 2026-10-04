@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Shield, Key, RefreshCw, AlertCircle, CheckCircle2, Server, Clock } from "lucide-react";
-import api from "@/lib/api"; // Assuming typical next.js api client
+import { apiClient as api } from "@/lib/axios"; // Assuming typical next.js api client
 
 interface SecretHealth {
   status: string;
@@ -17,31 +17,33 @@ export default function SecretsManagementPage() {
   const [secrets, setSecrets] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = React.useCallback(async () => {
     try {
-      setLoading(true);
       const [healthRes, secretsRes] = await Promise.all([
-        api.get("/secrets/health").catch((e) => e.response?.data?.detail || { status: "UNHEALTHY" }),
+        api.get("/secrets/health").catch((e: unknown) => {
+          const detail = (e as { response?: { data?: { detail?: string } } })?.response?.data?.detail;
+          return detail || { status: "UNHEALTHY" };
+        }),
         api.get("/secrets/").catch(() => ({ data: { keys: [] } }))
       ]);
-      setHealth(healthRes.data || healthRes);
-      setSecrets(secretsRes.data?.keys || []);
+      setHealth((healthRes as any)?.data || healthRes);
+      setSecrets((secretsRes as any)?.data?.keys || []);
     } catch (error) {
       console.error("Failed to fetch secrets data", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    Promise.resolve().then(fetchData);
+  }, [fetchData]);
 
   const handleRotate = async (path: string) => {
     try {
       await api.post(`/secrets/${path}/rotate`);
       alert(`Rotation triggered for ${path}`);
-    } catch (e) {
+    } catch {
       alert("Failed to rotate secret");
     }
   };
