@@ -311,9 +311,9 @@ export default function WorkspaceHome() {
         <div>
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium mb-1">
-            <span>Home</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-zinc-800 dark:text-zinc-100">Dashboard</span>
+            <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:bg-amber-400/25 dark:text-amber-300 font-bold border border-amber-500/40 dark:border-amber-400/40 shadow-sm">Home</span>
+            <ChevronRight className="w-3 h-3 text-amber-500/70" />
+            <span className="text-zinc-800 dark:text-zinc-100 font-semibold">Dashboard</span>
           </div>
           <h1 className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 dark:from-blue-300 dark:via-indigo-200 dark:to-purple-300 bg-clip-text text-transparent">SaaS Workspace Summary</h1>
         </div>
@@ -429,18 +429,24 @@ export default function WorkspaceHome() {
         </div>
       </div>
 
-      {/* Main Welcome Banner with Username */}
+      {/* Main Welcome Banner with Highlighted Text */}
       <motion.div 
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full relative overflow-hidden rounded-2xl border border-blue-500/25 dark:border-primary/20 bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-transparent p-6 sm:p-8"
+        className="w-full relative overflow-hidden rounded-2xl border-2 border-amber-500/40 dark:border-amber-400/40 bg-gradient-to-r from-amber-500/15 via-amber-400/10 to-indigo-500/10 p-6 sm:p-8 shadow-lg shadow-amber-500/10"
       >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="max-w-xl relative z-10 space-y-2">
-          <p className="text-sm text-zinc-700 dark:text-zinc-200 leading-relaxed font-medium">
-            All services are up and active. We detected standard billing operations running. Review your live stats, check recent activities, and export your billing logs below.
-          </p>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="max-w-3xl relative z-10 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/25 dark:bg-amber-400/25 border border-amber-500/40 dark:border-amber-400/40 text-amber-900 dark:text-amber-200 text-xs font-bold tracking-wide shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            Highlighted Notice
+          </div>
+          <div className="p-4 sm:p-5 rounded-xl bg-amber-400/20 dark:bg-amber-400/15 border border-amber-500/50 dark:border-amber-400/35 backdrop-blur-md shadow-inner">
+            <p className="text-sm sm:text-base text-zinc-900 dark:text-amber-100 leading-relaxed font-semibold">
+              All services are up and active. We detected standard billing operations running. Review your live stats, check recent activities, and export your billing logs below.
+            </p>
+          </div>
         </div>
       </motion.div>
 
