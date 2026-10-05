@@ -72,15 +72,17 @@ export default function PersistentCopilot({ overrideVisibility = false }: { over
     return (
       <button 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-lg shadow-purple-500/20 hover:scale-105 transition-transform z-50 flex items-center justify-center"
+        aria-label="Open AyeCan AI Assistant"
+        className="fixed right-4 top-1/2 -translate-y-1/2 bg-black text-white hover:bg-zinc-900 border-2 border-cyan-500/60 px-3.5 py-3 rounded-2xl shadow-2xl shadow-cyan-500/25 hover:scale-105 transition-all z-50 flex items-center gap-2 cursor-pointer"
       >
-        <Sparkles className="w-6 h-6" />
+        <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
+        <span className="font-extrabold text-xs tracking-wider text-cyan-300 hidden sm:inline-block">AyeCan AI</span>
       </button>
     );
   }
 
   return (
-    <div className={overrideVisibility ? "h-full w-full flex flex-col bg-transparent" : `fixed right-0 top-0 h-screen bg-[#12121a]/95 backdrop-blur-xl border-l border-border shadow-2xl transition-all duration-300 z-50 flex flex-col ${isExpanded ? 'w-[800px]' : 'w-[400px]'}`}>
+    <div className={overrideVisibility ? "h-full w-full flex flex-col bg-transparent" : `fixed right-4 top-1/2 -translate-y-1/2 max-h-[85vh] h-[640px] bg-[#12121a]/95 backdrop-blur-xl border border-cyan-500/40 shadow-2xl rounded-2xl transition-all duration-300 z-50 flex flex-col ${isExpanded ? 'w-[750px]' : 'w-[380px]'}`}>
       
       {/* Header */}
       {!overrideVisibility && (

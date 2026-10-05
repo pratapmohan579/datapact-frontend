@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { 
   Users, ShoppingBag, DollarSign, Package, Search, Bell, ChevronDown, Moon, Sun, Download, 
   RefreshCw, Plus, X, Calendar, Check, Activity, Clock, ArrowUpRight, FileText, ChevronRight, 
-  Trash2, TrendingUp, TrendingDown, Star, MessageSquare, ShieldAlert
+  Trash2, TrendingUp, TrendingDown, Star, MessageSquare, ShieldAlert, Sparkles
 } from "lucide-react";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useAppStore } from "@/store/useAppStore";
@@ -814,6 +814,35 @@ export default function WorkspaceHome() {
                   <div className="h-full bg-emerald-500 rounded-full" style={{ width: "98.4%" }}></div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* AyeCan AI Assistant Section (Centered vertically in right side panel) */}
+          <div className="bg-gradient-to-br from-black via-zinc-900 to-slate-900 border-2 border-cyan-500/50 rounded-2xl p-5 shadow-xl shadow-cyan-500/10 text-white space-y-3 relative overflow-hidden transition-all duration-300 hover:border-cyan-400">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div className="flex justify-between items-center pb-2 border-b border-zinc-800 relative z-10">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-cyan-500/20 border border-cyan-500/40 rounded-lg text-cyan-400">
+                  <Sparkles className="w-4 h-4 animate-pulse" />
+                </div>
+                <h2 className="text-sm font-extrabold text-white tracking-wide">AyeCan AI Assistant</h2>
+              </div>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">
+                Active
+              </span>
+            </div>
+
+            <p className="text-xs text-zinc-300 leading-relaxed relative z-10 font-medium">
+              AyeCan AI is actively analyzing workspace telemetry, tracking dataset freshness, and ready to assist with custom queries.
+            </p>
+
+            <div className="pt-1 flex gap-2 relative z-10">
+              <button 
+                onClick={() => showToast("AyeCan AI Assistant active on right side", "info")}
+                className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/20 transition-all cursor-pointer hover:scale-[1.02]"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-cyan-200" /> Ask AyeCan
+              </button>
             </div>
           </div>
 
